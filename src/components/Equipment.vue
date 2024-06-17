@@ -1,5 +1,5 @@
 <template>
-  <v-data-table :headers="headers" :items="equipments" :sort-by="[{ key: 'name', order: 'asc' }]">
+  <v-data-table :headers="headers" :items="equipments" :sort-by="[{ key: 'id', order: 'asc' }]">
     <template v-slot:top>
       <v-toolbar flat>
         <v-toolbar-title>Equipment Management</v-toolbar-title>
