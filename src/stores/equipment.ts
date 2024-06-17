@@ -1,7 +1,12 @@
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
 
-export type Equipement = {
+export const useEquipmentStore = defineStore('equipment', () => {
+  const equipment = ref(undefined as Equipment | undefined)
+  return { equipment }
+})
+
+export type Equipment = {
   id: number
   name: string
   category: string
@@ -10,9 +15,3 @@ export type Equipement = {
   lastMaintenanceDate: Date
   rentalRate: number
 }
-
-export const useEquipmentStore = defineStore('equipment', () => {
-  const equipement = ref(undefined as Equipement | undefined)
-  // const doubleCount = computed(() => count.value * 2)
-  return { equipement }
-})

@@ -76,11 +76,17 @@
 </template>
 
 <script setup>
-import { computed, ref, watch, onMounted, nextTick, reactive } from 'vue'
-import api from '../services/api'
+import { computed, ref, watch, onMounted, nextTick } from 'vue'
+import {
+  getAll,
+  addEquipment,
+  updateEquipment,
+  deleteEquipment
+} from '../services/equipmentService'
 
 const dialog = ref(false)
 const dialogDelete = ref(false)
+
 const headers = [
   { title: 'Id', key: 'id' },
   { title: 'Name', key: 'name' },
@@ -130,12 +136,6 @@ onMounted(() => {
   initialize()
 })
 
-const initialize = async () => {
-  const allEquipments = await api.get('/equipment').then((response) => {
-    equipments.value = response.data
-  })
-}
-
 const editItem = (item) => {
   editedIndex.value = equipments.value.indexOf(item)
   editedItem.value = Object.assign({}, item)
@@ -146,14 +146,6 @@ const deleteItem = (item) => {
   editedIndex.value = equipments.value.indexOf(item)
   editedItem.value = Object.assign({}, item)
   dialogDelete.value = true
-}
-
-const deleteItemConfirm = async () => {
-  const equipmentDelete = await api.delete('/equipment/' + editedItem.value.id)
-  if (equipmentDelete) {
-    equipments.value.splice(editedIndex.value, 1)
-    closeDelete()
-  }
 }
 
 const close = () => {
@@ -172,18 +164,30 @@ const closeDelete = () => {
   })
 }
 
-const save = async () => {
-  if (editedIndex.value > -1) {
-    const equipmentUpdate = await api.put('/equipment/' + editedItem.value.id, editedItem.value)
-    if (equipmentUpdate) {
-      equipments.value[editedIndex.value] = editedItem.value
-    }
-  } else {
-    const equipmentAdd = await api.post('/equipment/', editedItem.value)
-    if (equipmentAdd) {
-      equipments.value.push(editedItem.value)
-    }
+const initialize = async () => (equipments.value = await getAll())
+
+const deleteItemConfirm = async () => {
+  try {
+    await deleteEquipment(editedItem.value.id)
+    equipments.value.splice(editedIndex.value, 1)
+    closeDelete()
+  } catch (error) {
+    console.error('Failed to delete equipment:', error)
   }
-  close()
+}
+
+const save = async () => {
+  try {
+    if (editedIndex.value > -1) {
+      await updateEquipment(editedItem.value.id, editedItem.value)
+      equipments.value[editedIndex.value] = { ...editedItem.value }
+    } else {
+      const addedEquipment = await addEquipment(editedItem.value)
+      equipments.value.push(addedEquipment)
+    }
+    close()
+  } catch (error) {
+    console.error('Failed to save equipment:', error)
+  }
 }
 </script>
