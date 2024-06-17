@@ -1,6 +1,43 @@
-# frontend
+# Antônio Marcos Machado Bernardes Equipment Management App
 
-This template should help get you started developing with Vue 3 in Vite.
+# Description:
+
+A simple web application for managing a list of equipment, demonstrating skills in .NET Framework, C#, ASP.NET Core, and Vue.
+
+# Technologies Used:
+
+To create this application, the following technologies were used:
+
+- [Node](https://nodejs.org/)
+- [Vuetify](https://vuetifyjs.com/en/)
+- [Vuejs](https://vuejs.org/)
+- [Vite](https://vitejs.dev/)
+
+# Setup Instructions
+
+The version of `Node` used to create the project is `20.3.1`.
+
+If Node is properly installed and configured, it is possible to build and test the application by running the `npm` script. To do this, run the commands in the root directory:
+
+### Project Setup
+
+```sh
+npm install
+```
+
+### Compile and Hot-Reload for Development
+
+```sh
+npm run dev
+```
+
+### Run Unit Tests with [Vitest](https://vitest.dev/)
+
+```sh
+npm run test:unit
+```
+
+The application uses Vuejs. And it was developed using the version 3.
 
 ## Recommended IDE Setup
 
@@ -14,32 +51,20 @@ TypeScript cannot handle type information for `.vue` imports by default, so we r
 
 See [Vite Configuration Reference](https://vitejs.dev/config/).
 
-## Project Setup
+# Implementation
 
-```sh
-npm install
-```
+The approach used to create this application consists of generating a template application using `vuejs 3` and then implementing CRUD actions using `typescript` and `axios` to carry out the requests.
 
-### Compile and Hot-Reload for Development
+In order to not spend time creating the screen, `Vuetify` components were used.
 
-```sh
-npm run dev
-```
+The test cases were implemented using `vitest`.
 
-### Type-Check, Compile and Minify for Production
+### Challenges:
 
-```sh
-npm run build
-```
+While using `vuetify` accelerated the development of the crud screen, the components were not written using the Composition API, so an adaptation was necessary.
 
-### Run Unit Tests with [Vitest](https://vitest.dev/)
+The same applies to test cases, using a proprietary component could have accelerated test development, as I had problems using vuetify in this scenario.
 
-```sh
-npm run test:unit
-```
+# Endpoints
 
-### Lint with [ESLint](https://eslint.org/)
-
-```sh
-npm run lint
-```
+The client will run in [localhost:5173](http://localhost:5173/).
